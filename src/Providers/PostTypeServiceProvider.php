@@ -2,21 +2,23 @@
 
 namespace App\Providers;
 
-use App\App;
 use Backalley\WordPress\PostType\Factory;
-use Illuminate\Support\ServiceProvider;
+use League\Container\ServiceProvider\AbstractServiceProvider;
 
-class PostTypeServiceProvider extends ServiceProvider
+class PostTypeServiceProvider extends AbstractServiceProvider
 {
+    protected $provides = [Factory::class];
+
     /**
      *
      */
     public function register()
     {
-        /** @param App $app */
-        $this->app->singleton(Factory::class, function ($app) {
+        $container = $this->getLeagueContainer();
 
-            return new Factory($app->get('config')->get('wp.option_handlers.post_type'));
-        });
+        $container->share(Factory::class, function () use ($container) {
+
+            return new Factory($container->get('config')->get('wp.option_handlers.post_type'));
+        })->addTag('post_type');
     }
 }

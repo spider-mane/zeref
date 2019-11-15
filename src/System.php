@@ -5,10 +5,6 @@ namespace WebTheory\Zeref;
 use WebTheory\Zeref\Exceptions\ConstantAlreadyDefinedException;
 use WebTheory\Zeref\Exceptions\UndefinedConfigKeyException;
 
-/**
- * Class Config
- * @package Roots\Bedrock
- */
 class System
 {
     /**

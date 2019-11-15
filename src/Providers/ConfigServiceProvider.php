@@ -5,6 +5,7 @@ namespace WebTheory\Zeref\Providers;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Container\ServiceProvider\BootableServiceProviderInterface;
 use Noodlehaus\Config;
+use WebTheory\Zeref\Application;
 
 class ConfigServiceProvider extends AbstractServiceProvider implements BootableServiceProviderInterface
 {
@@ -19,6 +20,7 @@ class ConfigServiceProvider extends AbstractServiceProvider implements BootableS
 
         $container->share('config', function () use ($container) {
 
+            /** @var Application $container */
             return new Config($this->getConfigFiles($container->configPath()));
         });
     }
@@ -26,7 +28,7 @@ class ConfigServiceProvider extends AbstractServiceProvider implements BootableS
     /**
      * retrieves files in a directory
      */
-    function getConfigFiles(string $dir): array
+    protected function getConfigFiles(string $dir): array
     {
         $files = [];
 

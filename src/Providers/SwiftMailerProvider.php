@@ -2,30 +2,30 @@
 
 namespace App\Providers;
 
-use App\App;
-use App\Facades\Config;
-use Illuminate\Support\ServiceProvider;
+use League\Container\ServiceProvider\AbstractServiceProvider;
 use Swift_Mailer;
 use Swift_SmtpTransport;
 
-class SwiftMailerProvider extends ServiceProvider
+class SwiftMailerProvider extends AbstractServiceProvider
 {
+    protected $provides = [Swift_Mailer::class];
+
     /**
      *
      */
     public function register()
     {
-        /** @param App $app */
-        $this->app->bind('mailer', function ($app) {
+        $container = $this->getLeagueContainer();
 
-            // $config = Config::get('mail');
-            $config = $app->get('config')->get('mail');
+        $container->add(Swift_Mailer::class, function () use ($container) {
+
+            $config = $container->get('config')->get('mail');
 
             $transport = (new Swift_SmtpTransport($config['host'], $config['port']))
                 ->setUsername($config['username'])
                 ->setPassword($config['password']);
 
             return new Swift_Mailer($transport);
-        });
+        })->addTag('mailer');
     }
 }

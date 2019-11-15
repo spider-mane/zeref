@@ -1,16 +1,23 @@
 <?php
 
-use Illuminate\Support\ServiceProvider;
+namespace WebTheory\Zeref\Providers;
 
-class TwigServiceProvider extends ServiceProvider
+use League\Container\ServiceProvider\AbstractServiceProvider;
+use Twig\Twig;
+
+class TwigServiceProvider extends AbstractServiceProvider
 {
+    protected $provides = [Twig::class];
+
     /**
      *
      */
     public function register()
     {
-        $this->app->singleton('twig', function ($app) {
+        $container = $this->getLeagueContainer();
+
+        $container->share(Twig::class, function () use ($container) {
             //
-        });
+        })->addTag('twig');
     }
 }

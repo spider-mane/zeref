@@ -14,7 +14,9 @@ class FieldServiceProvider extends AbstractServiceProvider
 
     public function register()
     {
-        $this->getLeagueContainer()->share(FieldFactory::class, function ($container) {
+        $container = $this->getLeagueContainer();
+
+        $container->share(FieldFactory::class, function () use ($container) {
 
             $config = $container->get('config');
 

@@ -2,6 +2,10 @@
 
 namespace WebTheory\Zeref;
 
+use Dotenv\Dotenv;
+use Dotenv\Environment\Adapter\EnvConstAdapter;
+use Dotenv\Environment\Adapter\ServerConstAdapter;
+use Dotenv\Environment\DotenvFactory;
 use League\Container\Container;
 use Psr\Container\ContainerInterface;
 use WebTheory\Zeref\Providers\ConfigServiceProvider;
@@ -21,7 +25,7 @@ class Application extends Container
     protected $basePath;
 
     /**
-     * Environment file name base.
+     * The environment file to load during bootstrapping.
      *
      * @var string
      */
@@ -38,8 +42,7 @@ class Application extends Container
 
         $this
             ->addBaseDefinitions()
-            ->addBaseServiceProviders()
-            ->bootstrapApp();
+            ->addBaseServiceProviders();
     }
 
     /**
@@ -49,7 +52,7 @@ class Application extends Container
     {
         static::setInstance($this);
 
-        $this->add(ContainerInterface::class, $this)->addTag('app');
+        $this->share(ContainerInterface::class, $this)->addTag('app');
 
         return $this;
     }
@@ -67,17 +70,43 @@ class Application extends Container
     /**
      *
      */
-    protected function bootstrapApp()
+    protected function bootstrap()
     {
         $this
-            ->addServiceProvidersFromConfig()
+            ->loadEnvironment()
+            ->addProvidersFromConfig()
             ->bindAppToAccessors();
+
+        return $this;
     }
 
     /**
      *
      */
-    protected function addServiceProvidersFromConfig()
+    protected function loadEnvironment()
+    {
+        Env::init();
+
+        $dotenv = Dotenv::create(
+            $this->basePath(),
+            $this->getEnvironmentFile(),
+            new DotenvFactory([new EnvConstAdapter(), new ServerConstAdapter()])
+        );
+
+        $dotenv->safeLoad();
+        $dotenv->required(['WP_HOME', 'WP_SITEURL']);
+
+        if (!env('DATABASE_URL')) {
+            $dotenv->required(['DB_NAME', 'DB_USER', 'DB_PASSWORD']);
+        }
+
+        return $this;
+    }
+
+    /**
+     *
+     */
+    protected function addProvidersFromConfig()
     {
         array_map(
             [$this, 'addServiceProvider'],
@@ -94,6 +123,8 @@ class Application extends Container
     {
         ServiceAccessor::clearResolvedInstances();
         ServiceAccessor::setServiceAccessorContainer($this);
+
+        return $this;
     }
 
     /**
@@ -105,7 +136,7 @@ class Application extends Container
      */
     public function setBasePath($basePath)
     {
-        $this->basePath = rtrim($basePath, '\/');
+        $this->basePath = realpath($basePath);
         $this->addPathsToContainer();
 
         return $this;
@@ -121,6 +152,7 @@ class Application extends Container
         $this->add('path.base', $this->basePath());
         $this->add('path.config', $this->configPath());
         $this->add('path.themes', $this->themesPath());
+        $this->add('path.assets', $this->assetsPath());
         $this->add('path.languages', $this->langPath());
         $this->add('path.content', $this->contentPath());
         $this->add('path.plugins', $this->pluginsPath());
@@ -188,7 +220,19 @@ class Application extends Container
      */
     public function webPath($path = '')
     {
-        return realpath($this->basePath(WEB_PATH) . DS . $path);
+        return realpath($this->basePath(WEB_ROOT_DIRNAME) . DS . $path);
+    }
+
+    /**
+     * Get the path of the asset.
+     *
+     * @param string $path
+     *
+     * @return string
+     */
+    public function assetsPath($path = '')
+    {
+        return realpath($this->webPath('assets') . DS . $path);
     }
 
     /**
@@ -359,6 +403,30 @@ class Application extends Container
     protected static function setInstance(Application $instance)
     {
         static::$instance = $instance;
+
+        return $this;
+    }
+
+    /**
+     * Get the environment file to load during bootstrapping.
+     *
+     * @return string
+     */
+    public function getEnvironmentFile(): string
+    {
+        return $this->environmentFile ?: '.env';
+    }
+
+    /**
+     * Set the environment file to load during bootstrapping.
+     *
+     * @param string $environmentFile The environment file to load during bootstrapping.
+     *
+     * @return self
+     */
+    public function setEnvironmentFile(string $environmentFile)
+    {
+        $this->environmentFile = $environmentFile;
 
         return $this;
     }

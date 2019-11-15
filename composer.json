@@ -1,88 +1,78 @@
 {
-    "name": "webtheory/zeref",
-    "description": "Lighweight framework for building WordPress installation",
-    "homepage": "https://github.com/spider-mane/zeref",
-    "license": "MIT",
+  "name": "webtheory/zeref",
+  "description": "Lighweight framework for building WordPress based application",
+  "homepage": "https://github.com/spider-mane/zeref",
+  "license": "MIT",
 
-    "keywords": [
-        "webtheory",
-        "zeref"
-    ],
+  "keywords": [
+    "webtheory",
+    "zeref"
+  ],
 
-    "authors": [{
-        "name": "Chris Williams",
-        "email": "spider.mane.web@gmail.com",
-        "homepage": "https://github.com/spider-mane",
-        "role": "Developer"
-    }],
+  "authors": [{
+    "name": "Chris Williams",
+    "email": "spider.mane.web@gmail.com",
+    "homepage": "https://github.com/spider-mane",
+    "role": "Developer"
+  }],
 
-    "require": {
-        "php": "^7.1",
-        "dragonmantank/cron-expression": "^2.2",
-        "guzzlehttp/guzzle": "^6.3",
-        "hassankhan/config": "^2.1",
-        "league/container": "^3.3.0",
-        "league/flysystem": "^1.0",
-        "league/fractal": "^0.17.0",
-        "psr/container": "^1.0",
-        "ramsey/uuid": "^3.8",
-        "slim/slim": "4.3.0",
-        "swiftmailer/swiftmailer": "^6.2",
-        "symfony/console": "^4.3",
-        "symfony/property-access": "^4.2",
-        "vlucas/phpdotenv": "^3.3"
-    },
+  "require": {
+    "php": "^7.1",
+    "dragonmantank/cron-expression": "^2.2",
+    "guzzlehttp/guzzle": "^6.3",
+    "hassankhan/config": "^2.1",
+    "league/container": "^3.3.0",
+    "league/flysystem": "^1.0",
+    "league/fractal": "^0.17.0",
+    "oscarotero/env": "^1.2.0",
+    "psr/container": "^1.0",
+    "ramsey/uuid": "^3.8",
+    "slim/slim": "4.3.0",
+    "swiftmailer/swiftmailer": "^6.2",
+    "symfony/console": "^4.3",
+    "symfony/property-access": "^4.2",
+    "vlucas/phpdotenv": "^3.3"
+  },
 
-    "require-dev": {
-        "filp/whoops": "^2.5",
-        "phpunit/phpunit": "^8.2",
-        "squizlabs/php_codesniffer": "^3.0",
-        "friendsofphp/php-cs-fixer": "^2.15",
-        "phpbench/phpbench": "@dev",
-        "symfony/var-dumper": "^4.3"
-    },
+  "require-dev": {
+    "filp/whoops": "^2.5",
+    "phpunit/phpunit": "^8.2",
+    "squizlabs/php_codesniffer": "^3.0",
+    "friendsofphp/php-cs-fixer": "^2.15",
+    "phpbench/phpbench": "@dev",
+    "symfony/var-dumper": "^4.3"
+  },
 
-    "autoload": {
-        "psr-4": {
-            "WebTheory\\Zeref\\": "src/"
-        }
-    },
-
-    "autoload-dev": {
-        "psr-4": {
-            "WebTheory\\Zeref\\Tests\\": "tests/"
-        }
-    },
-
-    "suggest": {
-        "webtheory/html": "",
-        "webtheory/guctilitybelt": "",
-        "webtheory/leonidas": "",
-        "webtheory/saveyour": "",
-        "webtheory/wp-library": "",
-        "webtheory/zeref": ""
-    },
-
-    "scripts": {
-        "test": "vendor/bin/phpunit",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
-        "check-style": "vendor/bin/phpcs src tests",
-        "fix-style": "vendor/bin/phpcbf src tests",
-        "benchmark": "vendor/bin/phpbench"
-    },
-
-    "extra": {
-        "installer-paths": {
-            "htdocs/content/plugins/{$name}/": ["type:wordpress-plugin"],
-            "htdocs/content/mu-plugins/{$name}/": ["type:wordpress-muplugin"],
-            "htdocs/content/themes/{$name}/": ["type:wordpress-theme"]
-        },
-        "wordpress-install-dir": {
-            "johnpbloch/wordpress-core": "public/wp"
-        }
-    },
-
-    "config": {
-        "sort-packages": true
+  "autoload": {
+    "psr-4": {
+      "WebTheory\\Zeref\\": "src/"
     }
+  },
+
+  "autoload-dev": {
+    "psr-4": {
+      "WebTheory\\Zeref\\Tests\\": "tests/"
+    }
+  },
+
+  "suggest": {
+    "webtheory/html": "Create Html snippets",
+    "webtheory/leonidas": "OOP wrapper for WordPress api",
+    "webtheory/saveyour": "Highly flexible form building and processing library",
+    "webtheory/wp-library": "Suite of WordPress micro enhancements"
+  },
+
+  "scripts": {
+    "test": "vendor/bin/phpunit",
+    "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+    "check-style": "vendor/bin/phpcs src tests",
+    "fix-style": "vendor/bin/phpcbf src tests",
+    "benchmark": "vendor/bin/phpbench"
+  },
+
+  "extra": {},
+
+  "config": {
+    "sort-packages": true
+  }
 }
