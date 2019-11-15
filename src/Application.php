@@ -366,6 +366,16 @@ class Application extends Container
     }
 
     /**
+     * Determine if we are running in the console.
+     *
+     * @return bool
+     */
+    public function runningInConsole()
+    {
+        return php_sapi_name() == 'cli' || php_sapi_name() == 'phpdbg';
+    }
+
+    /**
      * Determine if the application is currently down for maintenance.
      *
      * @throws \League\Container\Exception\NotFoundException

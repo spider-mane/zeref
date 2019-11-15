@@ -56,9 +56,9 @@
   },
 
   "suggest": {
-    "webtheory/html": "Create Html snippets",
+    "webtheory/html": "Create reusable html snippets",
     "webtheory/leonidas": "OOP wrapper for WordPress api",
-    "webtheory/saveyour": "Highly flexible form building and processing library",
+    "webtheory/saveyour": "Flexible form building and processing library",
     "webtheory/wp-library": "Suite of WordPress micro enhancements"
   },
 
