@@ -1,0 +1,14 @@
+<?php
+
+use PhpCsFixer\Config;
+use PhpCsFixer\Finder;
+
+$finder = Finder::create()
+    ->in(['src', 'tests'])
+    ->exclude(['bin', 'vendor', 'node_modules']);
+
+return Config::create()
+    ->setFinder($finder)
+    ->setRules([
+        '@PSR2' => true
+    ]);
