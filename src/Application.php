@@ -3,12 +3,7 @@
 namespace WebTheory\Zeref;
 
 use Dotenv\Dotenv;
-use Dotenv\Environment\Adapter\EnvConstAdapter;
-use Dotenv\Environment\Adapter\ServerConstAdapter;
-use Dotenv\Environment\DotenvFactory;
-use League\Container\Container;
 use Psr\Container\ContainerInterface;
-use WebTheory\Zeref\Providers\ConfigServiceProvider;
 
 class Application extends Container
 {
@@ -36,6 +31,8 @@ class Application extends Container
      */
     public function __construct($basePath = null)
     {
+        parent::__construct();
+
         if ($basePath) {
             $this->setBasePath($basePath);
         }
@@ -62,18 +59,17 @@ class Application extends Container
      */
     protected function addBaseServiceProviders()
     {
-        $this->addServiceProvider(ConfigServiceProvider::class);
-
         return $this;
     }
 
     /**
      *
      */
-    protected function bootstrap()
+    public function bootstrap()
     {
         $this
             ->loadEnvironment()
+            ->bindConfiguration()
             ->addProvidersFromConfig()
             ->bindAppToAccessors();
 
@@ -85,20 +81,27 @@ class Application extends Container
      */
     protected function loadEnvironment()
     {
-        Env::init();
-
         $dotenv = Dotenv::create(
             $this->basePath(),
-            $this->getEnvironmentFile(),
-            new DotenvFactory([new EnvConstAdapter(), new ServerConstAdapter()])
+            $this->getEnvironmentFile()
         );
 
-        $dotenv->safeLoad();
+        $dotenv->load();
         $dotenv->required(['WP_HOME', 'WP_SITEURL']);
 
         if (!env('DATABASE_URL')) {
             $dotenv->required(['DB_NAME', 'DB_USER', 'DB_PASSWORD']);
         }
+
+        return $this;
+    }
+
+    /**
+     *
+     */
+    protected function bindConfiguration()
+    {
+        $this->share('config', new Config($this->configPath()));
 
         return $this;
     }
@@ -150,16 +153,16 @@ class Application extends Container
         $this->add('path', $this->path());
         $this->add('path.web', $this->webPath());
         $this->add('path.base', $this->basePath());
+        $this->add('path.assets', $this->assetsPath());
         $this->add('path.config', $this->configPath());
         $this->add('path.themes', $this->themesPath());
-        $this->add('path.assets', $this->assetsPath());
         $this->add('path.languages', $this->langPath());
         $this->add('path.content', $this->contentPath());
         $this->add('path.plugins', $this->pluginsPath());
         $this->add('path.storage', $this->storagePath());
+        $this->add('path.resources', $this->resourcePath());
         $this->add('path.bootstrap', $this->bootstrapPath());
         $this->add('path.muplugins', $this->mupluginsPath());
-        $this->add('path.resources', $this->resourcesPath());
         $this->add('path.wordpress', $this->wordpressPath());
     }
 
@@ -304,7 +307,7 @@ class Application extends Container
      *
      * @return string
      */
-    public function mupluginsPath($path = '')
+    public function muPluginsPath($path = '')
     {
         return realpath($this->contentPath('mu-plugins') . DS . $path);
     }
@@ -413,8 +416,6 @@ class Application extends Container
     protected static function setInstance(Application $instance)
     {
         static::$instance = $instance;
-
-        return $this;
     }
 
     /**

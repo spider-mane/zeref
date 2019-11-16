@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Providers;
+namespace WebTheory\Zeref\Providers;
 
-use Backalley\WordPress\Taxonomy\Factory;
 use League\Container\ServiceProvider\AbstractServiceProvider;
+use WebTheory\Leonidas\Taxonomy\Factory;
 
 class TaxonomyServiceProvider extends AbstractServiceProvider
 {

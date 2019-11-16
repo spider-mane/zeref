@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Providers;
+namespace WebTheory\Zeref\Providers;
 
-use Backalley\WordPress\PostType\Factory;
 use League\Container\ServiceProvider\AbstractServiceProvider;
+use WebTheory\Leonidas\PostType\Factory;
 
 class PostTypeServiceProvider extends AbstractServiceProvider
 {

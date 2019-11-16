@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Providers;
+namespace WebTheory\Zeref\Providers;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use Swift_Mailer;
 use Swift_SmtpTransport;
 
-class SwiftMailerProvider extends AbstractServiceProvider
+class SwiftMailerServiceProvider extends AbstractServiceProvider
 {
     protected $provides = [Swift_Mailer::class];
 

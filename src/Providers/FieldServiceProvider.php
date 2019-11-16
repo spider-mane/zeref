@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace WebTheory\Zeref\Providers;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use WebTheory\Leonidas\Fields\Factory as FormFieldFactory;
