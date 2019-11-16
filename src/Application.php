@@ -162,7 +162,7 @@ class Application extends Container
         $this->add('path.storage', $this->storagePath());
         $this->add('path.resources', $this->resourcePath());
         $this->add('path.bootstrap', $this->bootstrapPath());
-        $this->add('path.muplugins', $this->mupluginsPath());
+        $this->add('path.muplugins', $this->muPluginsPath());
         $this->add('path.wordpress', $this->wordpressPath());
     }
 
