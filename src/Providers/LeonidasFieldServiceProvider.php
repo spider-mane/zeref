@@ -8,15 +8,15 @@ use WebTheory\Leonidas\Fields\Managers\Factory as DataManagerFactory;
 use WebTheory\Leonidas\Fields\WpAdminField;
 use WebTheory\Saveyour\FieldFactory;
 
-class FieldServiceProvider extends AbstractServiceProvider
+class LeonidasFieldServiceProvider extends AbstractServiceProvider
 {
-    protected $provides = [FieldFactory::class];
+    protected $provides = ['leonidas_field'];
 
     public function register()
     {
         $container = $this->getLeagueContainer();
 
-        $container->share(FieldFactory::class, function () use ($container) {
+        $container->share('leonidas_field', function () use ($container) {
 
             $config = $container->get('config');
 
@@ -28,6 +28,6 @@ class FieldServiceProvider extends AbstractServiceProvider
             $dataManagerFactory = new DataManagerFactory([], $managers);
 
             return new FieldFactory($formFieldFactory, $dataManagerFactory, $controller);
-        })->addTag('field');
+        });
     }
 }

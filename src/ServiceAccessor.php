@@ -87,7 +87,7 @@ class ServiceAccessor
      *
      * @return \Illuminate\Contracts\Foundation\Application
      */
-    public static function getServiceAccessorApplication()
+    public static function getServiceAccessorContainer()
     {
         return static::$container;
     }

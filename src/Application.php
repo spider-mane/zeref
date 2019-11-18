@@ -49,7 +49,9 @@ class Application extends Container
     {
         static::setInstance($this);
 
-        $this->share(ContainerInterface::class, $this)->addTag('app');
+        $this->share('app', $this);
+        $this->share(Application::class, $this);
+        $this->share(ContainerInterface::class, $this);
 
         return $this;
     }
@@ -150,20 +152,20 @@ class Application extends Container
      */
     protected function addPathsToContainer()
     {
-        $this->add('path', $this->path());
-        $this->add('path.web', $this->webPath());
-        $this->add('path.base', $this->basePath());
-        $this->add('path.assets', $this->assetsPath());
-        $this->add('path.config', $this->configPath());
-        $this->add('path.themes', $this->themesPath());
-        $this->add('path.languages', $this->langPath());
-        $this->add('path.content', $this->contentPath());
-        $this->add('path.plugins', $this->pluginsPath());
-        $this->add('path.storage', $this->storagePath());
-        $this->add('path.resources', $this->resourcePath());
-        $this->add('path.bootstrap', $this->bootstrapPath());
-        $this->add('path.muplugins', $this->muPluginsPath());
-        $this->add('path.wordpress', $this->wordpressPath());
+        $this->share('path', $this->path());
+        $this->share('path.web', $this->webPath());
+        $this->share('path.base', $this->basePath());
+        $this->share('path.assets', $this->assetsPath());
+        $this->share('path.config', $this->configPath());
+        $this->share('path.themes', $this->themesPath());
+        $this->share('path.languages', $this->langPath());
+        $this->share('path.content', $this->contentPath());
+        $this->share('path.plugins', $this->pluginsPath());
+        $this->share('path.storage', $this->storagePath());
+        $this->share('path.resources', $this->resourcePath());
+        $this->share('path.bootstrap', $this->bootstrapPath());
+        $this->share('path.muplugins', $this->muPluginsPath());
+        $this->share('path.wordpress', $this->wordpressPath());
     }
 
     /**

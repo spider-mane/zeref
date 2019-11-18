@@ -3,21 +3,30 @@
 namespace WebTheory\Zeref\Providers;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
-use Twig\Twig;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 class TwigServiceProvider extends AbstractServiceProvider
 {
-    protected $provides = [Twig::class];
+    protected $provides = [Environment::class];
 
     /**
-     *
+     * {@inheritDoc}
      */
     public function register()
     {
         $container = $this->getLeagueContainer();
 
-        $container->share(Twig::class, function () use ($container) {
-            //
-        })->addTag('twig');
+        $container->share(Environment::class, function () use ($container) {
+
+            $config = $container->get('config')->get('twig', []);
+
+            $loader = new FilesystemLoader(
+                $config['templates'] ?? null,
+                $config['root'] ?? null
+            );
+
+            return new Environment($loader, $config['options'] ?? null);
+        })->addTag('twig')->addTag('view');
     }
 }

@@ -2,11 +2,11 @@
 
 namespace WebTheory\Zeref\Accessors;
 
-use Backalley\WordPress\PostType\Factory;
+use WebTheory\Leonidas\PostType\Factory;
 use WebTheory\Zeref\ServiceAccessor;
 
 /**
- *  @method static array create(array $postTypes)
+ * @method static array create(array $postTypes)
  */
 class PostType extends ServiceAccessor
 {

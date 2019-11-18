@@ -2,7 +2,7 @@
 
 namespace WebTheory\Zeref\Accessors;
 
-use Backalley\WordPress\Taxonomy\Factory;
+use WebTheory\Leonidas\Taxonomy\Factory;
 use WebTheory\Zeref\ServiceAccessor;
 
 /**

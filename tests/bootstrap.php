@@ -17,5 +17,3 @@ define('WP_CONTENT_DIRNAME', 'app');
 define('WP_CONTENT_DIR', APP_ROOT_DIR . DS . WEB_ROOT_DIRNAME . DS . WP_CONTENT_DIRNAME);
 
 require dirname(__DIR__) . '/vendor/autoload.php';
-
-require dirname(__DIR__) . '/src/Helpers/functions.php';

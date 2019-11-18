@@ -11,6 +11,6 @@ class App extends ServiceAccessor
      */
     protected static function getServiceAccessed()
     {
-        return 'container';
+        return 'app';
     }
 }
