@@ -19,10 +19,11 @@ class Config extends NoodlehausConfig
             // Get file information
             $info = pathinfo($path);
             $parts = explode('.', $info['basename']);
-            $extension = array_pop($parts);
-            $entry = $parts[0];
+            $entry = preg_replace("/[^A-Za-z0-9 ]/", '_', $parts[0]);
 
             if ($parser === null) {
+                $extension = array_pop($parts);
+
                 // Skip the `dist` extension
                 if ($extension === 'dist') {
                     $extension = array_pop($parts);
