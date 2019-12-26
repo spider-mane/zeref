@@ -72,6 +72,8 @@ class System
         foreach (self::$configMap as $key => $value) {
             defined($key) or define($key, $value);
         }
+
+        static::$configMap = [];
     }
 
     /**

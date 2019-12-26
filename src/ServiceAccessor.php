@@ -117,7 +117,7 @@ class ServiceAccessor
         $instance = static::getServiceAccessorRoot();
 
         if (!$instance) {
-            throw new RuntimeException('A service has not been defined.');
+            throw new \RuntimeException('A service has not been defined.');
         }
 
         return $instance->$method(...$args);

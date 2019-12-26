@@ -1,0 +1,40 @@
+[13-Dec-2019 09:41:07 UTC] PHP Fatal error:  Uncaught Error: Class 'WebTheory\Zeref\RuntimeException' not found in /home/vagrant/code/packages/zeref/src/ServiceAccessor.php:120
+Stack trace:
+#0 /home/vagrant/code/packages/zeref/tests/env/public/app/mu-plugins/scripts.php(32): WebTheory\Zeref\ServiceAccessor::__callStatic('path', Array)
+#1 /home/vagrant/code/packages/zeref/tests/env/public/wp/wp-settings.php(291): include_once('/home/vagrant/c...')
+#2 /home/vagrant/code/packages/zeref/tests/env/public/wp-config.php(35): require_once('/home/vagrant/c...')
+#3 /home/vagrant/code/packages/zeref/tests/env/public/wp/wp-load.php(42): require_once('/home/vagrant/c...')
+#4 /home/vagrant/code/packages/zeref/tests/env/public/wp/wp-admin/admin.php(34): require_once('/home/vagrant/c...')
+#5 /home/vagrant/code/packages/zeref/tests/env/public/wp/wp-admin/plugins.php(10): require_once('/home/vagrant/c...')
+#6 {main}
+  thrown in /home/vagrant/code/packages/zeref/src/ServiceAccessor.php on line 120
+[13-Dec-2019 09:42:41 UTC] PHP Fatal error:  Uncaught Error: Class 'WebTheory\Zeref\RuntimeException' not found in /home/vagrant/code/packages/zeref/src/ServiceAccessor.php:120
+Stack trace:
+#0 /home/vagrant/code/packages/zeref/tests/env/public/app/mu-plugins/scripts.php(32): WebTheory\Zeref\ServiceAccessor::__callStatic('path', Array)
+#1 /home/vagrant/code/packages/zeref/tests/env/public/wp/wp-settings.php(291): include_once('/home/vagrant/c...')
+#2 /home/vagrant/code/packages/zeref/tests/env/public/wp-config.php(35): require_once('/home/vagrant/c...')
+#3 /home/vagrant/code/packages/zeref/tests/env/public/wp/wp-load.php(42): require_once('/home/vagrant/c...')
+#4 /home/vagrant/code/packages/zeref/tests/env/public/wp/wp-admin/admin-ajax.php(22): require_once('/home/vagrant/c...')
+#5 {main}
+  thrown in /home/vagrant/code/packages/zeref/src/ServiceAccessor.php on line 120
+[13-Dec-2019 19:59:50 UTC] PHP Fatal error:  Uncaught Error: Class 'WpMaster' not found in /home/vagrant/code/packages/zeref/tests/env/app/scripts/init.php:3
+Stack trace:
+#0 /home/vagrant/code/packages/zeref/tests/env/public/app/mu-plugins/scripts.php(19): require()
+#1 /home/vagrant/code/packages/zeref/tests/env/public/wp/wp-includes/class-wp-hook.php(288): {closure}('')
+#2 /home/vagrant/code/packages/zeref/tests/env/public/wp/wp-includes/class-wp-hook.php(312): WP_Hook->apply_filters(NULL, Array)
+#3 /home/vagrant/code/packages/zeref/tests/env/public/wp/wp-includes/plugin.php(478): WP_Hook->do_action(Array)
+#4 /home/vagrant/code/packages/zeref/tests/env/public/wp/wp-settings.php(523): do_action('init')
+#5 /home/vagrant/code/packages/zeref/tests/env/public/wp-config.php(54): require_once('/home/vagrant/c...')
+#6 /home/vagrant/code/packages/zeref/tests/env/public/wp/wp-load.php(42): require_once('/home/vagrant/c...')
+#7 /home/vagrant/code/packages/zeref/tests/env/public/wp/wp-admin/admin.php(34): require_once('/home/vagrant/c...')
+#8 /home/vagrant/code/pa in /home/vagrant/code/packages/zeref/tests/env/app/scripts/init.php on line 3
+[13-Dec-2019 22:32:37 UTC] PHP Warning:  An unexpected error occurred. Something may be wrong with WordPress.org or this server&#8217;s configuration. If you continue to have problems, please try the <a href="https://wordpress.org/support/forums/">support forums</a>. (WordPress could not establish a secure connection to WordPress.org. Please contact your server administrator.) in /home/vagrant/code/packages/zeref/tests/env/public/wp/wp-includes/update.php on line 162
+[13-Dec-2019 22:32:37 UTC] PHP Stack trace:
+[13-Dec-2019 22:32:37 UTC] PHP   1. {main}() /home/vagrant/code/packages/zeref/tests/env/public/wp/wp-admin/update-core.php:0
+[13-Dec-2019 22:32:37 UTC] PHP   2. require_once() /home/vagrant/code/packages/zeref/tests/env/public/wp/wp-admin/update-core.php:10
+[13-Dec-2019 22:32:37 UTC] PHP   3. do_action() /home/vagrant/code/packages/zeref/tests/env/public/wp/wp-admin/admin.php:170
+[13-Dec-2019 22:32:37 UTC] PHP   4. WP_Hook->do_action() /home/vagrant/code/packages/zeref/tests/env/public/wp/wp-includes/plugin.php:478
+[13-Dec-2019 22:32:37 UTC] PHP   5. WP_Hook->apply_filters() /home/vagrant/code/packages/zeref/tests/env/public/wp/wp-includes/class-wp-hook.php:312
+[13-Dec-2019 22:32:37 UTC] PHP   6. _maybe_update_core() /home/vagrant/code/packages/zeref/tests/env/public/wp/wp-includes/class-wp-hook.php:288
+[13-Dec-2019 22:32:37 UTC] PHP   7. wp_version_check() /home/vagrant/code/packages/zeref/tests/env/public/wp/wp-includes/update.php:741
+[13-Dec-2019 22:32:37 UTC] PHP   8. trigger_error() /home/vagrant/code/packages/zeref/tests/env/public/wp/wp-includes/update.php:162

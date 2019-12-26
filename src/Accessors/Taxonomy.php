@@ -10,6 +10,9 @@ use WebTheory\Zeref\ServiceAccessor;
  */
 class Taxonomy extends ServiceAccessor
 {
+    /**
+     *
+     */
     protected static function getServiceAccessed()
     {
         return Factory::class;

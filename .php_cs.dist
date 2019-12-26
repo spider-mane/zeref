@@ -10,5 +10,5 @@ $finder = Finder::create()
 return Config::create()
     ->setFinder($finder)
     ->setRules([
-        '@PSR2' => true
+        '@PSR12' => true
     ]);

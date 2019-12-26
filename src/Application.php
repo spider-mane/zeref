@@ -29,15 +29,12 @@ class Application extends Container
     /**
      *
      */
-    public function __construct($basePath = null)
+    public function __construct(string $basePath)
     {
         parent::__construct();
 
-        if ($basePath) {
-            $this->setBasePath($basePath);
-        }
-
         $this
+            ->setBasePath($basePath)
             ->addBaseDefinitions()
             ->addBaseServiceProviders();
     }
@@ -139,7 +136,7 @@ class Application extends Container
      *
      * @return $this
      */
-    public function setBasePath($basePath)
+    protected function setBasePath($basePath)
     {
         $this->basePath = realpath($basePath);
         $this->addPathsToContainer();
@@ -389,13 +386,13 @@ class Application extends Container
      */
     public function isDownForMaintenance()
     {
-        $filePath = $this->wordpressPath('.maintenance');
+        $file = $this->wordpressPath('.maintenance');
 
-        if (function_exists('wp_installing') && !file_exists($filePath)) {
-            return \wp_installing();
+        if (function_exists('wp_installing') && !file_exists($file)) {
+            return wp_installing();
         }
 
-        return file_exists($filePath);
+        return file_exists($file);
     }
 
     /**

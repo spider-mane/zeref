@@ -16,3 +16,9 @@ phpunit.xml
 # misc
 build
 coverage
+
+# wordpress tests
+tests/env/public/wp/*
+tests/env/public/app/*/
+tests/env/public/app/mu-plugins/*/
+tests/env/env.php
