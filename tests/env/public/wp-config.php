@@ -2,9 +2,8 @@
 
 use WebTheory\Zeref\Application;
 
-
 require dirname(__DIR__) . '/env.php';
-require realpath('../../../../../vendor/autoload.php');
+require dirname(__DIR__, 3) . '/vendor/autoload.php';
 
 define('DS', DIRECTORY_SEPARATOR);
 define('APP_ROOT_DIR', dirname(__DIR__));

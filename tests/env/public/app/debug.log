@@ -38,3 +38,9 @@ Stack trace:
 [13-Dec-2019 22:32:37 UTC] PHP   6. _maybe_update_core() /home/vagrant/code/packages/zeref/tests/env/public/wp/wp-includes/class-wp-hook.php:288
 [13-Dec-2019 22:32:37 UTC] PHP   7. wp_version_check() /home/vagrant/code/packages/zeref/tests/env/public/wp/wp-includes/update.php:741
 [13-Dec-2019 22:32:37 UTC] PHP   8. trigger_error() /home/vagrant/code/packages/zeref/tests/env/public/wp/wp-includes/update.php:162
+[28-Dec-2019 09:22:35 UTC] PHP Warning:  An unexpected error occurred. Something may be wrong with WordPress.org or this server&#8217;s configuration. If you continue to have problems, please try the <a href="https://wordpress.org/support/forums/">support forums</a>. (WordPress could not establish a secure connection to WordPress.org. Please contact your server administrator.) in /home/vagrant/code/packages/zeref/tests/env/public/wp/wp-admin/includes/translation-install.php on line 67
+[28-Dec-2019 09:22:35 UTC] PHP Stack trace:
+[28-Dec-2019 09:22:35 UTC] PHP   1. {main}() /home/vagrant/code/packages/zeref/tests/env/public/wp/wp-admin/install.php:0
+[28-Dec-2019 09:22:35 UTC] PHP   2. wp_get_available_translations() /home/vagrant/code/packages/zeref/tests/env/public/wp/wp-admin/install.php:308
+[28-Dec-2019 09:22:35 UTC] PHP   3. translations_api() /home/vagrant/code/packages/zeref/tests/env/public/wp/wp-admin/includes/translation-install.php:131
+[28-Dec-2019 09:22:35 UTC] PHP   4. trigger_error() /home/vagrant/code/packages/zeref/tests/env/public/wp/wp-admin/includes/translation-install.php:67
