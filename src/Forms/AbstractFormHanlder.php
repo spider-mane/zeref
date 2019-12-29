@@ -34,22 +34,25 @@ abstract class AbstractFormHandler implements FormInterface
     protected const FIELD_DATA = [];
 
     /**
-     * @return string[]
+     *
      */
-    public function verificationFields(ServerRequestInterface $request): array
+    public function __construct()
     {
-        return [
-            'nonce' => (new Hidden)
-                ->setName($this->nonce['name'])
-                ->setValue(wp_create_nonce($this->nonce['action']))
-                ->toHtml(),
-        ];
+        //
     }
 
     /**
      *
      */
-    public function getFieldsData(ServerRequestInterface $request): array
+    public function process(ServerRequestInterface $request): FormProcessingCacheInterface
+    {
+        return $this->formSubmissionManager()->process($this->request($request));
+    }
+
+    /**
+     *
+     */
+    public function formFields(ServerRequestInterface $request): array
     {
         $fieldData = static::FIELD_DATA;
         $controllers = $this->formFieldControllers();
@@ -65,17 +68,22 @@ abstract class AbstractFormHandler implements FormInterface
     }
 
     /**
-     *
+     * @return string[]
      */
-    public function process(ServerRequestInterface $request): FormProcessingCacheInterface
+    public function verificationFields(ServerRequestInterface $request): array
     {
-        return $this->getFormSubmissionManager()->process($this->customizeRequest($request));
+        return [
+            'nonce' => (new Hidden)
+                ->setName($this->nonce['name'])
+                ->setValue(wp_create_nonce($this->nonce['action']))
+                ->toHtml(),
+        ];
     }
 
     /**
      *
      */
-    protected function customizeRequest(ServerRequestInterface $request): ServerRequestInterface
+    protected function request(ServerRequestInterface $request): ServerRequestInterface
     {
         return $request;
     }
@@ -83,11 +91,11 @@ abstract class AbstractFormHandler implements FormInterface
     /**
      *
      */
-    protected function getFormSubmissionManager(): FormSubmissionManagerInterface
+    protected function formSubmissionManager(): FormSubmissionManagerInterface
     {
         return (new FormSubmissionManager())
             ->setValidators($this->formRequestValidators())
-            ->setFields($this->formFieldControllers())
+            ->setFields($this->fieldControllers)
             ->setProcessors($this->formDataProcessors());
     }
 

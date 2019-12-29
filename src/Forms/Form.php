@@ -75,11 +75,12 @@ class Form implements FormControllerInterface
      */
     protected function hook()
     {
-        add_action("admin_post_{$this->id}", [$this, 'process']);
+        add_action("admin_post_{$this->id}", [$this, 'handle']);
 
         if (true === $this->nopriv) {
-            add_action("admin_post_nopriv_{$this->id}", [$this, 'process']);
+            add_action("admin_post_nopriv_{$this->id}", [$this, 'handle']);
         }
+
 
         return $this;
     }
@@ -95,23 +96,49 @@ class Form implements FormControllerInterface
         return [
             'method' => $this->method(),
             'action' => $this->action(),
-            'verification' => array_merge(
+            'fields' => $handler->formFields($request),
+            'checks' => array_merge(
                 $handler->verificationFields($request),
                 $this->requestFields($request)
             ),
-            'fields' => $handler->getFields($request),
-            'field_data' => $handler->getFieldsData($request),
         ];
     }
 
     /**
      *
      */
-    public function process()
+    public function handle()
     {
-        $this->initHandler()->process($this->getRequest());
-        $this->redirect();
+        $request = $this->getRequest();
 
+        $this->process($request)->redirect($request)->exit($request);
+    }
+
+    /**
+     *
+     */
+    public function process(ServerRequestInterface $request): Form
+    {
+        $this->initHandler()->process($request);
+
+        return $this;
+    }
+
+    /**
+     *
+     */
+    protected function redirect(ServerRequestInterface $request): Form
+    {
+        wp_safe_redirect($this->redirect ?? wp_get_referer());
+
+        return $this;
+    }
+
+    /**
+     *
+     */
+    protected function exit(ServerRequestInterface $request)
+    {
         exit;
     }
 
@@ -160,14 +187,6 @@ class Form implements FormControllerInterface
 
             'referer' => wp_referer_field(false)
         ];
-    }
-
-    /**
-     *
-     */
-    protected function redirect()
-    {
-        wp_safe_redirect($this->redirect ?? wp_get_referer());
     }
 
     /**

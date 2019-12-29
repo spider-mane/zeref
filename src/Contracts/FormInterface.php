@@ -3,7 +3,6 @@
 namespace WebTheory\Zeref\Contracts;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Saveyour\Contracts\FormFieldInterface;
 use WebTheory\Saveyour\Contracts\FormProcessingCacheInterface;
 
 interface FormInterface
@@ -19,14 +18,9 @@ interface FormInterface
     public function process(ServerRequestInterface $request): FormProcessingCacheInterface;
 
     /**
-     * @return FormFieldInterface[]
-     */
-    public function getFields(ServerRequestInterface $request): array;
-
-    /**
      * @return array
      */
-    public function getFieldsData(ServerRequestInterface $request): array;
+    public function formFields(ServerRequestInterface $request): array;
 
     /**
      * @return string[]
