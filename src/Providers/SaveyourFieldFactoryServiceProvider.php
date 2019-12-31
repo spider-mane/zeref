@@ -38,7 +38,7 @@ class SaveyourFieldFactoryServiceProvider extends AbstractServiceProvider
     protected function createFormFieldFactory(Config $config): FormFieldResolverFactoryInterface
     {
         $namespaces = [
-            'webtheory.acnologia' => 'WebTheory\\Acnologia\\Forms\\Fields',
+            'webtheory.acnologia' => 'App\\Forms\\Fields',
             // 'webtheory.zeref' => 'WebTheory\\Zeref\\Forms\\Fields',
         ];
 
@@ -53,7 +53,7 @@ class SaveyourFieldFactoryServiceProvider extends AbstractServiceProvider
     protected function createDataManagerFactory(Config $config): FieldDataManagerResolverFactoryInterface
     {
         $namespaces = [
-            'webtheory.acnologia' => 'WebTheory\\Acnologia\\Forms\\Managers',
+            'webtheory.acnologia' => 'App\\Forms\\Managers',
             // 'webtheory.zeref' => 'WebTheory\\Zeref\\Forms\\Managers',
         ];
 
