@@ -4,6 +4,7 @@ namespace WebTheory\Zeref\Forms;
 
 use GuzzleHttp\Psr7\ServerRequest;
 use Psr\Http\Message\ServerRequestInterface;
+use WebTheory\Saveyour\Contracts\FormProcessingCacheInterface;
 use WebTheory\Saveyour\Fields\Hidden;
 use WebTheory\Zeref\Contracts\FormControllerInterface;
 use WebTheory\Zeref\Contracts\FormInterface;
@@ -13,7 +14,7 @@ class Form implements FormControllerInterface
     /**
      *
      */
-    protected $id;
+    protected $action;
 
     /**
      *
@@ -23,7 +24,7 @@ class Form implements FormControllerInterface
     /**
      * @var bool
      */
-    protected $nopriv = false;
+    protected $nopriv = true;
 
     /**
      * @var string
@@ -33,14 +34,9 @@ class Form implements FormControllerInterface
     /**
      *
      */
-    protected $config;
-
-    /**
-     *
-     */
-    public function __construct(string $id, string $handler, bool $nopriv = false, ?string $redirect = null)
+    public function __construct(string $action, string $handler, bool $nopriv = true, ?string $redirect = null)
     {
-        $this->id = $id;
+        $this->action = $action;
         $this->nopriv = $nopriv;
         $this->setHandler($handler);
 
@@ -75,12 +71,11 @@ class Form implements FormControllerInterface
      */
     protected function hook()
     {
-        add_action("admin_post_{$this->id}", [$this, 'handle']);
+        add_action("admin_post_{$this->action}", [$this, 'handle']);
 
         if (true === $this->nopriv) {
-            add_action("admin_post_nopriv_{$this->id}", [$this, 'handle']);
+            add_action("admin_post_nopriv_{$this->action}", [$this, 'handle']);
         }
-
 
         return $this;
     }
@@ -110,36 +105,27 @@ class Form implements FormControllerInterface
     public function handle()
     {
         $request = $this->getRequest();
+        $results = $this->process($request);
 
-        $this->process($request)->redirect($request)->exit($request);
+        $this->redirect($request, $results);
+
+        exit;
     }
 
     /**
      *
      */
-    public function process(ServerRequestInterface $request): Form
+    public function process(ServerRequestInterface $request): FormProcessingCacheInterface
     {
-        $this->initHandler()->process($request);
-
-        return $this;
+        return $this->initHandler()->process($request);
     }
 
     /**
      *
      */
-    protected function redirect(ServerRequestInterface $request): Form
+    protected function redirect(ServerRequestInterface $request, FormProcessingCacheInterface $results)
     {
         wp_safe_redirect($this->redirect ?? wp_get_referer());
-
-        return $this;
-    }
-
-    /**
-     *
-     */
-    protected function exit(ServerRequestInterface $request)
-    {
-        exit;
     }
 
     /**
@@ -182,7 +168,7 @@ class Form implements FormControllerInterface
         return [
             'action' => (new Hidden)
                 ->setName('action')
-                ->setValue($this->id)
+                ->setValue($this->action)
                 ->toHtml(),
 
             'referer' => wp_referer_field(false)

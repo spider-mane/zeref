@@ -14,9 +14,9 @@ class FormRepository
     /**
      *
      */
-    public function register(FormControllerInterface $form)
+    public function register(string $id, FormControllerInterface $form)
     {
-        $this->forms[$form->id()] = $form;
+        $this->forms[$id] = $form;
     }
 
     /**

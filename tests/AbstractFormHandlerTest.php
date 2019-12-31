@@ -14,6 +14,10 @@ class AbstractFormHandlerTest extends TestCase
         return new class extends AbstractFormHandler
         {
             public $request;
+            public $nonce = [
+                'name' => 'testname',
+                'value' => 'testvalue',
+            ];
 
             protected function formFieldControllers(): array
             {
