@@ -18,20 +18,20 @@ abstract class AbstractFormHandler implements FormInterface
     /**
      *
      */
-    protected $nonce = [
-        'name' => null,
-        'action' => null,
-    ];
-
-    /**
-     *
-     */
     protected const FORM_DATA = [];
 
     /**
      *
      */
     protected const FIELD_DATA = [];
+
+    /**
+     *
+     */
+    protected const NONCE_DATA = [
+        'name' => null,
+        'action' => null,
+    ];
 
     /**
      *
@@ -74,8 +74,8 @@ abstract class AbstractFormHandler implements FormInterface
     {
         return [
             'nonce' => (new Hidden)
-                ->setName($this->nonce['name'])
-                ->setValue(wp_create_nonce($this->nonce['action']))
+                ->setName(static::NONCE_DATA['name'])
+                ->setValue(wp_create_nonce(static::NONCE_DATA['action']))
                 ->toHtml(),
         ];
     }

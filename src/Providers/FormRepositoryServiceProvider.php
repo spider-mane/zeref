@@ -1,5 +1,7 @@
 <?php
 
+namespace WebTheory\Zeref\Providers;
+
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use WebTheory\Zeref\Forms\FormRepository;
 
