@@ -20,6 +20,13 @@ class Application extends Container
     protected $basePath;
 
     /**
+     * Web root relative to basePath.
+     *
+     * @var string
+     */
+    protected $webRoot;
+
+    /**
      * The environment file to load during bootstrapping.
      *
      * @var string
@@ -29,9 +36,11 @@ class Application extends Container
     /**
      *
      */
-    public function __construct(string $basePath)
+    public function __construct(string $basePath, string $webRoot = 'public')
     {
         parent::__construct();
+
+        $this->webRoot = $webRoot;
 
         $this
             ->setBasePath($basePath)
@@ -154,15 +163,10 @@ class Application extends Container
         $this->share('path.base', $this->basePath());
         $this->share('path.assets', $this->assetsPath());
         $this->share('path.config', $this->configPath());
-        $this->share('path.themes', $this->themesPath());
         $this->share('path.languages', $this->langPath());
-        $this->share('path.content', $this->contentPath());
-        $this->share('path.plugins', $this->pluginsPath());
         $this->share('path.storage', $this->storagePath());
         $this->share('path.resources', $this->resourcePath());
         $this->share('path.bootstrap', $this->bootstrapPath());
-        $this->share('path.muplugins', $this->muPluginsPath());
-        $this->share('path.wordpress', $this->wordpressPath());
     }
 
     /**
@@ -174,7 +178,7 @@ class Application extends Container
      */
     public function basePath($path = '')
     {
-        return realpath($this->basePath . DS . $path);
+        return realpath($this->basePath . DIRECTORY_SEPARATOR . $path);
     }
 
     /**
@@ -186,31 +190,7 @@ class Application extends Container
      */
     public function path($path = '')
     {
-        return realpath($this->basePath('app') . DS . $path);
-    }
-
-    /**
-     * Get the resources directory path.
-     *
-     * @param string $path
-     *
-     * @return string
-     */
-    public function resourcePath($path = '')
-    {
-        return realpath($this->basePath('resources') . DS . $path);
-    }
-
-    /**
-     * Get the path to the resources "languages" directory.
-     *
-     * @param string $path
-     *
-     * @return string
-     */
-    public function langPath($path = '')
-    {
-        return realpath($this->resourcePath('languages') . DS . $path);
+        return realpath($this->basePath('app') . DIRECTORY_SEPARATOR . $path);
     }
 
     /**
@@ -222,7 +202,31 @@ class Application extends Container
      */
     public function webPath($path = '')
     {
-        return realpath($this->basePath(WEB_ROOT_DIRNAME) . DS . $path);
+        return realpath($this->basePath($this->webRoot) . DIRECTORY_SEPARATOR . $path);
+    }
+
+    /**
+     * Get the resources directory path.
+     *
+     * @param string $path
+     *
+     * @return string
+     */
+    public function resourcePath($path = '')
+    {
+        return realpath($this->basePath('resources') . DIRECTORY_SEPARATOR . $path);
+    }
+
+    /**
+     * Get the path to the resources "languages" directory.
+     *
+     * @param string $path
+     *
+     * @return string
+     */
+    public function langPath($path = '')
+    {
+        return realpath($this->resourcePath('languages') . DIRECTORY_SEPARATOR . $path);
     }
 
     /**
@@ -234,7 +238,7 @@ class Application extends Container
      */
     public function assetsPath($path = '')
     {
-        return realpath($this->webPath('assets') . DS . $path);
+        return realpath($this->webPath('assets') . DIRECTORY_SEPARATOR . $path);
     }
 
     /**
@@ -246,7 +250,7 @@ class Application extends Container
      */
     public function configPath($path = '')
     {
-        return realpath($this->basePath('config') . DS . $path);
+        return realpath($this->basePath('config') . DIRECTORY_SEPARATOR . $path);
     }
 
     /**
@@ -258,7 +262,7 @@ class Application extends Container
      */
     public function storagePath($path = '')
     {
-        return realpath($this->basePath('storage') . DS . $path);
+        return realpath($this->basePath('storage') . DIRECTORY_SEPARATOR . $path);
     }
 
     /**
@@ -270,69 +274,7 @@ class Application extends Container
      */
     public function bootstrapPath($path = '')
     {
-        return realpath($this->basePath('bootstrap') . DS . $path);
-    }
-
-    /**
-     * Get the WordPress directory path.
-     *
-     * @param string $path
-     *
-     * @throws \Illuminate\Container\EntryNotFoundException
-     *
-     * @return string
-     */
-    public function wordpressPath($path = '')
-    {
-        return realpath($this->webPath(WP_CORE_DIRNAME) . DS . $path);
-    }
-
-    /**
-     * Get the WordPress "content" directory.
-     *
-     * @param string $path
-     *
-     * @return string
-     */
-    public function contentPath($path = '')
-    {
-        return realpath(WP_CONTENT_DIR . DS . $path);
-    }
-
-    /**
-     * Get the WordPress "mu-plugins" directory.
-     *
-     * @param string $path
-     *
-     * @return string
-     */
-    public function muPluginsPath($path = '')
-    {
-        return realpath($this->contentPath('mu-plugins') . DS . $path);
-    }
-
-    /**
-     * Get the WordPress "plugins" directory.
-     *
-     * @param string $path
-     *
-     * @return string
-     */
-    public function pluginsPath($path = '')
-    {
-        return realpath($this->contentPath('plugins') . DS . $path);
-    }
-
-    /**
-     * Get the WordPress "themes" directory.
-     *
-     * @param string $path
-     *
-     * @return string
-     */
-    public function themesPath($path = '')
-    {
-        return realpath($this->contentPath('themes') . DS . $path);
+        return realpath($this->basePath('bootstrap') . DIRECTORY_SEPARATOR . $path);
     }
 
     /**
