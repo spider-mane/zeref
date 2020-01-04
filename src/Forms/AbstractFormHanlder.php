@@ -16,29 +16,16 @@ use WebTheory\Zeref\Contracts\FormInterface;
 abstract class AbstractFormHandler implements FormInterface
 {
     /**
-     *
+     * @var array
      */
-    protected const FORM_DATA = [];
-
-    /**
-     *
-     */
-    protected const FIELD_DATA = [];
-
-    /**
-     *
-     */
-    protected const NONCE_DATA = [
-        'name' => null,
-        'action' => null,
-    ];
+    protected $config = [];
 
     /**
      *
      */
     public function __construct()
     {
-        //
+        $this->config = $this->config();
     }
 
     /**
@@ -54,7 +41,7 @@ abstract class AbstractFormHandler implements FormInterface
      */
     public function formFields(ServerRequestInterface $request): array
     {
-        $fieldData = static::FIELD_DATA;
+        $fieldData = $this->config['fields'];
         $controllers = $this->formFieldControllers();
 
         foreach ($fieldData as $field => &$data) {
@@ -72,11 +59,13 @@ abstract class AbstractFormHandler implements FormInterface
      */
     public function verificationFields(ServerRequestInterface $request): array
     {
+        $nonceData = $this->config['nonce'];
+
         return [
             'nonce' => (new Hidden)
-                ->setName(static::NONCE_DATA['name'])
-                ->setValue(wp_create_nonce(static::NONCE_DATA['action']))
-                ->toHtml(),
+                ->setName($nonceData['name'])
+                ->setValue(wp_create_nonce($nonceData['action']))
+                ->toHtml()
         ];
     }
 
@@ -104,8 +93,10 @@ abstract class AbstractFormHandler implements FormInterface
      */
     protected function formRequestValidators(): array
     {
+        $nonceData = $this->config['nonce'];
+
         return [
-            'nonce' => new WpNonceValidator($this->nonce['name'], $this->nonce['action'])
+            'nonce' => new WpNonceValidator($nonceData['name'], $nonceData['action'])
         ];
     }
 
@@ -121,4 +112,9 @@ abstract class AbstractFormHandler implements FormInterface
      * @return FormFieldControllerInterface[]
      */
     abstract protected function formFieldControllers(): array;
+
+    /**
+     * @return array
+     */
+    abstract protected function config(): array;
 }

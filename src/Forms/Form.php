@@ -83,7 +83,7 @@ class Form implements FormControllerInterface
     /**
      *
      */
-    protected function build()
+    public function build(): array
     {
         $handler = $this->initHandler();
         $request = $this->getRequest();

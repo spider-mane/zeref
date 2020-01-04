@@ -2,16 +2,16 @@
 
 namespace WebTheory\Zeref\Accessors;
 
-use WebTheory\Saveyour\Factories\FieldFactory;
+use WebTheory\Leonidas\Fields\Field;
 use WebTheory\Zeref\ServiceAccessor;
 
-class Field extends ServiceAccessor
+class AdminField extends ServiceAccessor
 {
     /**
      *
      */
     protected static function getServiceAccessed()
     {
-        return FieldFactory::class;
+        return Field::class;
     }
 }
