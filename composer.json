@@ -27,6 +27,7 @@
     "symfony/console": "^4.3",
     "symfony/property-access": "^4.2",
     "vlucas/phpdotenv": "^3.3",
+    "webtheory/guctilitybelt": "^0.2.4",
     "webtheory/saveyour": "0.1.3"
   },
 

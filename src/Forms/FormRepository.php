@@ -9,7 +9,7 @@ class FormRepository
     /**
      * @var FormControllerInterface[]
      */
-    protected $forms;
+    protected $forms = [];
 
     /**
      *

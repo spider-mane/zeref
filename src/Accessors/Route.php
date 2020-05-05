@@ -10,7 +10,7 @@ class Route extends ServiceAccessor
     /**
      *
      */
-    protected static function getServiceAccessed()
+    protected static function _getServiceToProxy()
     {
         return RouteCollectorProxyInterface::class;
     }

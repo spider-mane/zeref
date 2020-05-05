@@ -8,7 +8,7 @@ class Twig extends ServiceAccessor
     /**
      *
      */
-    protected function getServiceAccessed()
+    protected function _getServiceToProxy()
     {
         return Environment::class;
     }

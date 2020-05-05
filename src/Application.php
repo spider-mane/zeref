@@ -3,7 +3,9 @@
 namespace WebTheory\Zeref;
 
 use Dotenv\Dotenv;
+use League\Container\Container;
 use Psr\Container\ContainerInterface;
+use WebTheory\GuctilityBelt\Config;
 
 class Application extends Container
 {
@@ -34,7 +36,11 @@ class Application extends Container
     protected $environmentFile = '.env';
 
     /**
+     * __construct
      *
+     * @param  mixed $basePath
+     * @param  mixed $webRoot
+     * @return void
      */
     public function __construct(string $basePath, string $webRoot = 'public')
     {
@@ -42,8 +48,7 @@ class Application extends Container
 
         $this->webRoot = $webRoot;
 
-        $this
-            ->setBasePath($basePath)
+        $this->setBasePath($basePath)
             ->addBaseDefinitions()
             ->addBaseServiceProviders();
     }
@@ -79,6 +84,7 @@ class Application extends Container
             ->loadEnvironment()
             ->bindConfiguration()
             ->addProvidersFromConfig()
+            ->setWpConfig()
             ->bindAppToAccessors();
 
         return $this;
@@ -130,10 +136,34 @@ class Application extends Container
     /**
      *
      */
+    protected function setWpConfig()
+    {
+        /** @var Config $config */
+        $config = $this->get('config');
+
+        $values = $config->get('wp.config');
+        $values = array_merge(
+            $values['default'] ?? [],
+            $values[env('APP_ENV')] ?? []
+        );
+
+        foreach ($values as $name => $value) {
+            define($name, $value);
+        }
+
+        // Remove the wp config properties as they should not be accessed from this context beyond this point
+        $config->remove('wp.config');
+
+        return $this;
+    }
+
+    /**
+     *
+     */
     protected function bindAppToAccessors()
     {
-        ServiceAccessor::clearResolvedInstances();
-        ServiceAccessor::setServiceAccessorContainer($this);
+        ServiceAccessor::_clearResolvedInstances();
+        ServiceAccessor::_setProxyContainer($this);
 
         return $this;
     }
@@ -307,16 +337,6 @@ class Application extends Container
     public function isLocale($locale)
     {
         return $this->getLocale() == $locale;
-    }
-
-    /**
-     * Determine if we are running in the console.
-     *
-     * @return bool
-     */
-    public function runningInConsole()
-    {
-        return php_sapi_name() == 'cli' || php_sapi_name() == 'phpdbg';
     }
 
     /**

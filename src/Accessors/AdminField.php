@@ -10,7 +10,7 @@ class AdminField extends ServiceAccessor
     /**
      *
      */
-    protected static function getServiceAccessed()
+    protected static function _getServiceToProxy()
     {
         return Field::class;
     }

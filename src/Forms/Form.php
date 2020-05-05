@@ -48,14 +48,14 @@ class Form implements FormControllerInterface
     /**
      * Set the value of form
      *
-     * @param string $form
+     * @param string $handler
      *
      * @return self
      */
-    public function setHandler(string $form)
+    public function setHandler(string $handler)
     {
-        if (class_exists($form) && in_array(FormInterface::class, class_implements($form))) {
-            $this->form = $form;
+        if (class_exists($handler) && in_array(FormInterface::class, class_implements($handler))) {
+            $this->handler = $handler;
         } else {
             $interface = FormInterface::class;
             $message = "\$form argument must be a reference to an implementation of $interface";
@@ -85,17 +85,18 @@ class Form implements FormControllerInterface
      */
     public function build(): array
     {
-        $handler = $this->initHandler();
         $request = $this->getRequest();
+        $handler = $this->initHandler();
+        $verification = array_merge(
+            $handler->verificationFields($request),
+            $this->requestFields($request)
+        );
 
         return [
             'method' => $this->method(),
             'action' => $this->action(),
             'fields' => $handler->formFields($request),
-            'checks' => array_merge(
-                $handler->verificationFields($request),
-                $this->requestFields($request)
-            ),
+            'checks' => implode("\n", $verification)
         ];
     }
 

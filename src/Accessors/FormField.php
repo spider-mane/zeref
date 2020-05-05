@@ -10,7 +10,7 @@ class FormField extends ServiceAccessor
     /**
      *
      */
-    protected static function getServiceAccessed()
+    protected static function _getServiceToProxy()
     {
         return FieldFactory::class;
     }

@@ -10,12 +10,14 @@ class ServiceAccessorTest extends TestCase
 {
     public function testAccessorsCanGetDefinedService()
     {
+        $this->expectNotice();
+
         $app = new Application(APP_ROOT_DIR);
         $app->bootstrap();
 
         $appAccessor = new class extends ServiceAccessor
         {
-            public static function getServiceAccessed()
+            public static function _getServiceToProxy()
             {
                 return 'app';
             }
@@ -23,14 +25,14 @@ class ServiceAccessorTest extends TestCase
 
         $configAccessor = new class extends ServiceAccessor
         {
-            public static function getServiceAccessed()
+            public static function _getServiceToProxy()
             {
                 return 'config';
             }
         };
 
-        ServiceAccessor::clearResolvedInstances();
-        ServiceAccessor::setServiceAccessorContainer($app);
+        ServiceAccessor::_clearResolvedInstances();
+        ServiceAccessor::_setProxyContainer($app);
 
         $this->assertEquals($app, $appAccessor::get('app'));
         $this->assertEquals(

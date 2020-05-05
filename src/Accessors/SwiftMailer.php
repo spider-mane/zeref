@@ -10,7 +10,7 @@ class SwiftMailer extends ServiceAccessor
     /**
      *
      */
-    protected static function getServiceAccessed()
+    protected static function _getServiceToProxy()
     {
         return Swift_Mailer::class;
     }

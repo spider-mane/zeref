@@ -13,7 +13,7 @@ interface FormInterface
     public function __construct();
 
     /**
-     *
+     * @return FormProcessingCacheInterface
      */
     public function process(ServerRequestInterface $request): FormProcessingCacheInterface;
 

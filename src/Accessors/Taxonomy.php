@@ -13,7 +13,7 @@ class Taxonomy extends ServiceAccessor
     /**
      *
      */
-    protected static function getServiceAccessed()
+    protected static function _getServiceToProxy()
     {
         return Factory::class;
     }
