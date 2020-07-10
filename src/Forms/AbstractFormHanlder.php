@@ -3,6 +3,7 @@
 namespace WebTheory\Zeref\Forms;
 
 use Psr\Http\Message\ServerRequestInterface;
+use WebTheory\Leonidas\Auth\Nonce;
 use WebTheory\Leonidas\Forms\Validators\WpNonceValidator;
 use WebTheory\Saveyour\Contracts\FormDataProcessorInterface;
 use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
@@ -10,7 +11,6 @@ use WebTheory\Saveyour\Contracts\FormProcessingCacheInterface;
 use WebTheory\Saveyour\Contracts\FormSubmissionManagerInterface;
 use WebTheory\Saveyour\Contracts\FormValidatorInterface;
 use WebTheory\Saveyour\Controllers\FormSubmissionManager;
-use WebTheory\Saveyour\Fields\Hidden;
 use WebTheory\Zeref\Contracts\FormInterface;
 
 abstract class AbstractFormHandler implements FormInterface
@@ -59,13 +59,8 @@ abstract class AbstractFormHandler implements FormInterface
      */
     public function verificationFields(ServerRequestInterface $request): array
     {
-        $nonceData = $this->config['nonce'];
-
         return [
-            'nonce' => (new Hidden)
-                ->setName($nonceData['name'])
-                ->setValue(wp_create_nonce($nonceData['action']))
-                ->toHtml()
+            'nonce' => $this->createNonce()->field()
         ];
     }
 
@@ -93,11 +88,19 @@ abstract class AbstractFormHandler implements FormInterface
      */
     protected function formRequestValidators(): array
     {
-        $nonceData = $this->config['nonce'];
-
         return [
-            'nonce' => new WpNonceValidator($nonceData['name'], $nonceData['action'])
+            'nonce' => new WpNonceValidator($this->createNonce())
         ];
+    }
+
+    /**
+     *
+     */
+    protected function createNonce(): Nonce
+    {
+        $nonce = $this->config['nonce'];
+
+        return new Nonce($nonce['name'], $nonce['action'], $nonce['exp'] ?? null);
     }
 
     /**
