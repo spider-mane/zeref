@@ -59,17 +59,7 @@ abstract class AbstractFormHandler implements FormInterface
      */
     public function verificationFields(ServerRequestInterface $request): array
     {
-        return [
-            'nonce' => $this->createNonce()->field()
-        ];
-    }
-
-    /**
-     *
-     */
-    protected function request(ServerRequestInterface $request): ServerRequestInterface
-    {
-        return $request;
+        return ['nonce' => $this->createNonce()->field()];
     }
 
     /**
@@ -88,9 +78,7 @@ abstract class AbstractFormHandler implements FormInterface
      */
     protected function formRequestValidators(): array
     {
-        return [
-            'nonce' => new WpNonceValidator($this->createNonce())
-        ];
+        return ['nonce' => new WpNonceValidator($this->createNonce())];
     }
 
     /**
@@ -101,6 +89,14 @@ abstract class AbstractFormHandler implements FormInterface
         $nonce = $this->config['nonce'];
 
         return new Nonce($nonce['name'], $nonce['action'], $nonce['exp'] ?? null);
+    }
+
+    /**
+     *
+     */
+    protected function request(ServerRequestInterface $request): ServerRequestInterface
+    {
+        return $request;
     }
 
     /**
