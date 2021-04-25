@@ -1,9 +1,12 @@
 <?php
 
-/**
- *
- */
-function env($name, $default = null)
-{
-    return Env::get($name) ?? $default;
+if (!function_exists('env')) {
+
+    /**
+     *
+     */
+    function env($name, $default = null)
+    {
+        return Env::get($name) ?? $default;
+    }
 }

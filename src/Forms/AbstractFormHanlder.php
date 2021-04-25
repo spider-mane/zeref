@@ -69,8 +69,8 @@ abstract class AbstractFormHandler implements FormInterface
     {
         return (new FormSubmissionManager())
             ->setValidators($this->formRequestValidators())
-            ->setFields($this->formFieldControllers())
-            ->setProcessors($this->formDataProcessors());
+            ->setFields(...$this->formFieldControllers())
+            ->setProcessors(...$this->formDataProcessors());
     }
 
     /**
